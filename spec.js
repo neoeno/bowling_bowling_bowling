@@ -10,17 +10,27 @@ function it(message, testFn) {
 }
 
 function runTests() {
+  var haveMyTestsFailed = false
   tests.forEach(function(test) {
     console.log(chalk.cyan(test.message))
-    test.testFn()
+    try {
+      test.testFn()
+      console.log(chalk.green("Passed!"))
+    } catch (e) {
+      haveMyTestsFailed = true
+      console.log(chalk.red("Test failed! %s"), e)
+    }
   })
+  if (haveMyTestsFailed) {
+    console.log("At least one of your tests failed")
+  } else {
+    console.log(chalk.green("All your tests passed!"))
+  }
 }
 
 function assertEqual(a, b) {
-  if (a == b) {
-    console.log(chalk.green("Passed!"))
-  } else {
-    console.error(chalk.red("Failed! %s is not equal to %s"), a, b)
+  if (a != b) {
+    throw a + " is not equal to " + b
   }
 }
 
