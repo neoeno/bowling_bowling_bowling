@@ -1,9 +1,9 @@
-const config = require('./Config')
+const TestFramework = require('./TestFramework')
 const chalk = require('chalk')
 
-function TestFrameworkReporterFactory() {
+function ReporterFactory() {
   function reportSingleTestResult(testResult) {
-    if (testResult === config.TEST_PASSED) {
+    if (testResult === TestFramework.TEST_PASSED) {
       console.log(chalk.green("Passed!"))
     } else {
       console.log(chalk.red("Test failed!"))
@@ -11,7 +11,7 @@ function TestFrameworkReporterFactory() {
   }
 
   function reportSuiteStatus(status) {
-    if (status === config.TEST_PASSED) {
+    if (status === TestFramework.TEST_PASSED) {
       console.log(chalk.green("All your tests passed!"))
     } else {
       console.log(chalk.red("At least one of your tests failed"))
@@ -29,4 +29,4 @@ function TestFrameworkReporterFactory() {
   }
 }
 
-module.exports = TestFrameworkReporterFactory
+module.exports = ReporterFactory

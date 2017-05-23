@@ -1,6 +1,6 @@
-const TestFrameworkFactory = require('./TestFramework/TestFramework')
+const TestRunner = require('./TestFramework/Runner')
 
-const t = TestFrameworkFactory()
+const t = TestRunner()
 
 t.it("asserts 1 == 1", function() {
   t.assertEqual(1, 1)
