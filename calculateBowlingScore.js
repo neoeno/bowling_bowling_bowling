@@ -1,5 +1,4 @@
 function calculateBowlingScore(rollList, frame = 0, score = 0) {
-  console.log(rollList, score, frame)
   const newFrame = frame + 1
 
   if (frame == 9) {
