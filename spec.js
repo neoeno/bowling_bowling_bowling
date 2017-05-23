@@ -1,3 +1,5 @@
+const chalk = require('chalk')
+
 const tests = []
 
 function it(message, testFn) {
@@ -9,16 +11,16 @@ function it(message, testFn) {
 
 function runTests() {
   tests.forEach(function(test) {
-    console.log(test.message)
+    console.log(chalk.cyan(test.message))
     test.testFn()
   })
 }
 
 function assertEqual(a, b) {
   if (a == b) {
-    console.log("Passed!")
+    console.log(chalk.green("Passed!"))
   } else {
-    console.error("Failed! %s is not equal to %s", a, b)
+    console.error(chalk.red("Failed! %s is not equal to %s"), a, b)
   }
 }
 
