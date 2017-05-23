@@ -3,10 +3,10 @@ const chalk = require('chalk')
 
 function ReporterFactory() {
   function reportSingleTestResult(testResult) {
-    if (testResult === TestFramework.TEST_PASSED) {
+    if (testResult.didPass()) {
       console.log(chalk.green("Passed!"))
     } else {
-      console.log(chalk.red("Test failed!"))
+      console.log(chalk.red("Test failed! %s"), testResult.getMessage())
     }
   }
 

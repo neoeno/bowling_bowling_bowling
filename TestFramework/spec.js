@@ -1,4 +1,4 @@
-const TestRunner = require('./TestFramework/Runner')
+const TestRunner = require('./Runner')
 
 const t = TestRunner()
 

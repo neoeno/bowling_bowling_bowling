@@ -1,6 +1,31 @@
 const TestFramework = require('./TestFramework')
 const TestFrameworkReporterFactory = require('./Reporter')
 
+function TestStatus(status, message) {
+  function didPass() {
+    return status == TestFramework.TEST_PASSED
+  }
+
+  function didFail() {
+    return status == TestFramework.TEST_FAILED
+  }
+
+  function getStatus() {
+    return status
+  }
+
+  function getMessage() {
+    return message
+  }
+
+  return {
+    didPass: didPass,
+    didFail: didFail,
+    getStatus: getStatus,
+    getMessage: getMessage
+  }
+}
+
 function RunnerFactory() {
   const tests = []
   const reporter = TestFrameworkReporterFactory()
@@ -14,13 +39,11 @@ function RunnerFactory() {
 
   function runTests() {
     const testSuiteStatus = tests.reduce(function(statusSoFar, test) {
+      const testResult = runSingleTest(test)
+      reporter.reportSingleTestResult(testResult)
       if (statusSoFar === TestFramework.TEST_PASSED) {
-        const testResult = runSingleTest(test)
-        reporter.reportSingleTestResult(testResult)
-        return testResult
+        return testResult.getStatus()
       } else {
-        const testResult = runSingleTest(test)
-        reporter.reportSingleTestResult(testResult)
         return TestFramework.TEST_FAILED
       }
     }, TestFramework.TEST_PASSED)
@@ -32,15 +55,15 @@ function RunnerFactory() {
     reporter.reportTestStart(test)
     try {
       test.testFn()
-      return TestFramework.TEST_PASSED
+      return TestStatus(TestFramework.TEST_PASSED)
     } catch (e) {
-      return TestFramework.TEST_FAILED
+      return TestStatus(TestFramework.TEST_FAILED, e)
     }
   }
 
   function assertEqual(a, b) {
     if (a != b) {
-      throw "Nothing of any importance"
+      throw `${a} does not equal ${b}`
     }
   }
 
